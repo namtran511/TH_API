@@ -1,0 +1,129 @@
+{
+  "info": {
+    "name": "REST API - Quản Lý Sản Phẩm",
+    "description": "Collection chứa 6 API endpoints cho bài tập REST API quản lý sản phẩm.\n\nBase URL: http://localhost:3000",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Lấy toàn bộ sản phẩm",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/products",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "products"]
+        },
+        "description": "API 1: GET /api/products\nLấy toàn bộ thông tin sản phẩm (JOIN với bảng tblChatLieu để lấy TenCL)."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Tìm kiếm sản phẩm",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/products/search?name=Áo&material=Cotton",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "products", "search"],
+          "query": [
+            {
+              "key": "name",
+              "value": "Áo",
+              "description": "Tên sản phẩm (tìm kiếm gần đúng LIKE)"
+            },
+            {
+              "key": "material",
+              "value": "Cotton",
+              "description": "Tên chất liệu (tìm kiếm gần đúng LIKE)"
+            }
+          ]
+        },
+        "description": "API 2: GET /api/products/search?name={name}&material={material}\nTìm kiếm gần đúng (LIKE) theo tên sản phẩm và tên chất liệu."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Sản phẩm tồn kho",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/products/instock",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "products", "instock"]
+        },
+        "description": "API 3: GET /api/products/instock\nLấy danh sách sản phẩm tồn kho (Soluong > 0)."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Thêm mới sản phẩm",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"MaSP\": \"SP04\",\n  \"TenSP\": \"Túi xách nữ\",\n  \"MaCL\": \"CL02\",\n  \"MoTa\": \"Túi xách da nữ thời trang\",\n  \"GiaNhap\": 450000,\n  \"GiaBan\": 850000,\n  \"Soluong\": 25\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/products",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "products"]
+        },
+        "description": "API 4: POST /api/products\nThêm mới một sản phẩm. Gửi body JSON với các trường: MaSP, TenSP, MaCL, MoTa, GiaNhap, GiaBan, Soluong."
+      },
+      "response": []
+    },
+    {
+      "name": "5. Cập nhật sản phẩm",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"TenSP\": \"Áo thun nam cao cấp\",\n  \"MaCL\": \"CL01\",\n  \"MoTa\": \"Áo thun cotton organic thoáng mát\",\n  \"GiaNhap\": 150000,\n  \"GiaBan\": 300000,\n  \"Soluong\": 45\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/products/SP01",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "products", "SP01"]
+        },
+        "description": "API 5: PUT /api/products/{id}\nCập nhật thông tin sản phẩm. Thay SP01 bằng Mã SP cần cập nhật."
+      },
+      "response": []
+    },
+    {
+      "name": "6. Xóa sản phẩm",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/products/SP04",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "products", "SP04"]
+        },
+        "description": "API 6: DELETE /api/products/{id}\nXóa một sản phẩm. Thay SP04 bằng Mã SP cần xóa."
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+📘 BÁO CÁO: HƯỚNG DẪN SỬ DỤNG HỆ THỐNG QUẢN LÝ SẢN PHẨM
+Hệ thống Quản lý Sản phẩm được thiết kế bằng kiến trúc Single-Page Application (SPA) vận hành trực tiếp, tích hợp với RESTful API Backend (Node.js) và CSDL Microsoft SQL Server. Dưới đây là mô tả tính năng và cách thao tác thực tế dành cho người sử dụng:
+
+1. TỔNG QUAN GIAO DIỆN CHÍNH (DASHBOARD)
+Khi mở trình duyệt tại địa chỉ http://localhost:3000, màn hình của hệ thống sẽ xuất hiện với thiết kế hiện đại (Glassmorphism Dark Mode), chia làm 4 khu vực điều khiển:
+
+Thanh Công cụ (Top Header): Chứa nút Làm mới toàn bộ trang và nút Tạo sản phẩm mới.
+Khu vực Trục xoay Tìm kiếm (Search Bar): Nơi để quản lý áp dụng bộ lọc tra cứu nhanh nhạy bằng Tên hàng hoặc Tên Vật liệu.
+Thẻ Thống kê (Live Stats): 3 Thẻ liên tục cập nhật đếm ngược số lượng mặt hàng Kho: Tổng số, Số Lượng Có Sẵn và Hết Hàng.
+Bảng dữ liệu Master (Data Table): Cột sống của hệ thống, hiển thị chi tiết mọi dữ liệu có trong DB.
+2. HƯỚNG DẪN CÁC TÍNH NĂNG VÀ THAO TÁC (CRUD)
+🔍 2.1. Tìm kiếm và Lọc Sản Phẩm
+Mô tả: Hệ thống cho phép tìm kiếm mờ (LIKE) không cần gõ chính xác 100%.
+Cách dùng: Bạn gõ một phần tên sản phẩm (VD: Áo) vào ô "Tên sản phẩm" hoặc chất liệu vào ô bên cạnh. Sau đó, ấn hộp nút màu xanh biển [Tìm kiếm] (hoặc Enter).
+Giao diện sẽ gọi API (2) chắt lọc dữ liệu và chỉ giữ lại các ô thõa mãn điều kiện. Muốn quay lại toàn bộ hãy nhấn [Hiển thị tất cả].
+📦 2.2. Chiết xuất Hàng Tồn Kho (Xuất File Excel)
+Mô tả: Chức năng thiết thực để kiểm tra và báo cáo các nhóm hàng còn tồn đọng (Số lượng > 0).
+Cách dùng: Nhấn nút xanh lá cây [Hàng tồn kho]. Bảng lập tức loại đi các đối tượng cạn kiệt số lượng bằng cách đàm thoại với API (3).
+Sau khi có bảng tồn kho, bấm tiếp nút [Xuất Excel Đẹp] góc bảng: Hệ thống sẽ tự động tổng hợp danh sách trên, kẻ bảng màu mè chuyên nghiệp, quy đổi dòng tiền VNĐ và tải về máy tính file có đuôi .xlsx.
+➕ 2.3. Tạo Mới Một Sản Phẩm
+Mô tả: Ghi danh một lô hàng mới vào DataBase thông qua API (4).
+Cách dùng: Bấm vào nút màu tím [+ Thêm sản phẩm] góc cùng trên phải màn hình.
+Một hộp thoại hiện ra, bạn điền Mã Vật tư, Tên sản phẩm, Giá cả... (Mã Chất Liệu luôn là các tùy chọn có sẵn được đồng bộ từ Cơ sở dữ liệu để chống chế việc nhập sai mã).
+Bấm [Lưu sản phẩm] để xác nhận lưu. Thông báo màu xanh báo thành công lập tức hiện lên.
+✏️ 2.4. Cập Nhật Sản Phẩm
+Mô tả: Sửa lại các sai sót về giá tiền, mô tả của hàng hóa đã lưu thông qua API (5).
+Cách dùng: Ở mỗi dòng sản phẩm luôn có Icon cây bút chì: Bấm [Sửa].
+Hộp thoại sửa hiện lên và được nạp sẵn toàn bộ chữ nghĩa, giá tiền cũ của riêng mặt hàng đó. Bạn muốn cập nhật giá bán hoặc số lượng chỉ việc điền xóa số cũ, điền số mới và nhấn [Cập nhật].
+Lưu ý: Ô Mã SP sẽ bị hệ thống khóa xám (Read-only) nhằm đảm bảo tính toàn vẹn của Khóa chính.
+🗑️ 2.5. Xóa Hệ Thống
+Mô tả: Quét sạch một dòng sản phẩm khỏi vòng đời vận hành qua API (6).
+Cách dùng: Tại một mặt hàng bất kỳ cần loại bỏ, bấm nút Cọp rác màu đỏ [Xóa].
+Giao diện sẽ yêu cầu sự cam kết an toàn: “Bạn có chắc chắn muốn xóa xyz không?”. Nếu bạn xác nhận bằng nút "Yes/OK", lệnh hủy diệt sẽ gửi đi, làm hàng hóa bốc hơi khỏi giao diện và dữ liệu ngay lập tức.
